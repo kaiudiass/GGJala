@@ -250,28 +250,28 @@ const Product = () => {
                   <span className={styles.specLabel}>Tipo do Anúncio</span>
                   <span className={styles.specValue}>
                     <span className="material-symbols-outlined" style={{ fontSize: '16px', color: 'var(--color-primary)' }}>key</span>
-                    Conta Full Acesso (Java & Bedrock)
+                    Conta Full Acesso
                   </span>
                 </div>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>Procedência & Recuperação</span>
                   <span className={styles.specValue}>
                     <span className="material-symbols-outlined" style={{ fontSize: '16px', color: 'var(--color-secondary)' }}>verified_user</span>
-                    Criador da Conta &gt; Possui dados de recuperação
+                    Possui dados de recuperação
                   </span>
                 </div>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>Plataformas Suportadas</span>
                   <span className={styles.specValue}>
                     <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>devices</span>
-                    PC, Mac, Linux (Acesso total à Microsoft Store)
+                    PC, Mac, Linux
                   </span>
                 </div>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>Método de Entrega</span>
                   <span className={`${styles.specValue} ${styles.specValuePrimary}`}>
                     <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>schedule</span>
-                    Entrega Automática 24/7 (Chat Imediato)
+                    Entrega Automática 24/7
                   </span>
                 </div>
               </div>
