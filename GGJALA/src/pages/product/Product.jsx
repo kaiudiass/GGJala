@@ -312,14 +312,7 @@ const Product = () => {
                   <strong style={{ color: 'var(--color-on-surface)' }}>Instruções Importantes:</strong> Leia atentamente todas as informações antes de confirmar o pedido. Nunca forneça suas credenciais recebidas a terceiros em redes externas. Todas as transações são protegidas pelo protocolo de custódia oficial da ggJala.
                 </div>
               </div>
-              
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
-                
-                <button style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--color-error)', border: 'none', background: 'none', fontSize: '10px', fontWeight: 'bold' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>flag</span>
-                  Denunciar este anúncio
-                </button>
-              </div>
+     
             </div>
             
           </div>
