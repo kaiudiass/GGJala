@@ -341,6 +341,12 @@
 }
 
 /* Description */
+.descSection {
+  margin-top: 2.5rem;
+  border: 1px solid #2a2a2e;
+  gap: 1.5rem;
+}
+
 .descHeader {
   display: flex;
   align-items: center;
@@ -793,6 +799,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  border: 1px solid #2a2a2e;
 }
 @media (min-width: 768px) {
   .questionsSection { padding: 1.5rem; }

@@ -278,7 +278,7 @@ const Product = () => {
             </div>
 
             {/* Descrição do Anúncio */}
-            <div className={styles.card}>
+            <div className={`${styles.card} ${styles.descSection}`}>
               <div className={styles.descHeader}>
                 <div className={styles.sectionHeader} style={{ marginBottom: 0 }}>
                   <span className={`material-symbols-outlined ${styles.sectionIcon}`}>description</span>
