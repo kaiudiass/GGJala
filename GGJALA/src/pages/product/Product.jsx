@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { featuredProducts } from '../../mocks/marketplace';
+import QuestionThread from '../../components/product/QuestionThread/QuestionThread';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 import styles from './Product.module.css';
 
 const Product = () => {
@@ -22,11 +25,112 @@ const Product = () => {
     }
   };
 
+  const mockQuestions = [
+    {
+      id: 1,
+      userName: 'pedro_gamer',
+      userAvatar: 'PG',
+      time: 'há 2 horas',
+      text: 'Opa amigo, a conta tem ban no Hypixel ou está totalmente limpa? Consigo usar no Lunar Client?',
+      answer: {
+        time: 'há 1 hora',
+        text: 'Boa tarde Pedro! Totalmente limpa, nunca entrou no Hypixel nem em servidores de ranking. Funciona 100% liso no Lunar Client, Badlion e Vanilla!'
+      }
+    },
+    {
+      id: 2,
+      userName: 'lucas_craft',
+      userAvatar: 'LC',
+      time: 'há 5 horas',
+      text: 'Entrega automática mesmo se eu comprar agora de madrugada?',
+      answer: {
+        time: 'há 4 horas',
+        text: 'Sim! O bot da ggJala envia as credenciais no chat instantâneo no mesmo segundo em que o Pix for aprovado, independente do horário.'
+      }
+    }
+  ];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [activeThumb, setActiveThumb] = useState(0);
+  const VISIBLE_THUMBS = 3;
+  const thumbsInnerRef = useRef(null);
+
+  // Mock gallery — in production this would come from product data
+  const galleryImages = [
+    { src: product.image },
+    { src: product.image },
+    { src: product.image },
+    { src: product.image },
+    { src: product.image },
+    { src: product.image },
+  ];
+
+  // Clone first+last VISIBLE_THUMBS for seamless infinite loop
+  const loopedImages = [
+    ...galleryImages.slice(-VISIBLE_THUMBS),
+    ...galleryImages,
+    ...galleryImages.slice(0, VISIBLE_THUMBS),
+  ];
+  const realLength = galleryImages.length;
+  // thumbOffset starts at VISIBLE_THUMBS so looped array points to first real image
+  const [thumbOffset, setThumbOffset] = useState(VISIBLE_THUMBS);
+
+  const openLightbox = (index = 0) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const disableTransition = () => {
+    if (thumbsInnerRef.current) thumbsInnerRef.current.style.transition = 'none';
+  };
+  const enableTransition = () => {
+    if (thumbsInnerRef.current) thumbsInnerRef.current.style.transition = '';
+  };
+
+  const nextThumbs = useCallback(() => {
+    const newOffset = thumbOffset + 1;
+    setThumbOffset(newOffset);
+    const realIdx = (newOffset - VISIBLE_THUMBS + realLength) % realLength;
+    setActiveThumb(realIdx);
+    // Entering end clone zone — silently reset after animation
+    if (newOffset >= VISIBLE_THUMBS + realLength) {
+      setTimeout(() => {
+        disableTransition();
+        const resetOffset = VISIBLE_THUMBS;
+        setThumbOffset(resetOffset);
+        setActiveThumb(0);
+        requestAnimationFrame(() => requestAnimationFrame(enableTransition));
+      }, 310);
+    }
+  }, [thumbOffset, realLength]);
+
+  const prevThumbs = useCallback(() => {
+    const newOffset = thumbOffset - 1;
+    setThumbOffset(newOffset);
+    const realIdx = ((newOffset - VISIBLE_THUMBS) % realLength + realLength) % realLength;
+    setActiveThumb(realIdx);
+    // Entering start clone zone — silently reset after animation
+    if (newOffset < VISIBLE_THUMBS) {
+      setTimeout(() => {
+        disableTransition();
+        const resetOffset = newOffset + realLength;
+        setThumbOffset(resetOffset);
+        setActiveThumb(((resetOffset - VISIBLE_THUMBS) % realLength + realLength) % realLength);
+        requestAnimationFrame(() => requestAnimationFrame(enableTransition));
+      }, 310);
+    }
+  }, [thumbOffset, realLength]);
+
+  // Slide: each thumb is (100/VISIBLE_THUMBS)% of the track width
+  const thumbSlidePercent = thumbOffset * (100 / VISIBLE_THUMBS);
+
   return (
+    <>
     <main className={styles.main}>
       <div className={styles.breadcrumbContainer}>
         <div className={styles.breadcrumbInner}>
@@ -49,28 +153,39 @@ const Product = () => {
             {/* Top Info & Gallery Card */}
             <div className={`${styles.card} ${styles.cardRow}`}>
               <div className={styles.gallery}>
-                <div className={styles.mainImageContainer}>
-                  <img src={product.image} alt={product.title} className={styles.mainImage} />
-                  <div className={styles.imageBadge}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>bolt</span>
-                    Automático
-                  </div>
-                  <button className={styles.expandBtn} aria-label="Expandir imagem">
+                <div className={styles.mainImageContainer} onClick={() => openLightbox(activeThumb)} style={{ cursor: 'zoom-in' }}>
+                  <img src={galleryImages[activeThumb].src} alt={product.title} className={styles.mainImage} />
+                  
+                  <button className={styles.expandBtn} aria-label="Expandir imagem" onClick={(e) => { e.stopPropagation(); openLightbox(activeThumb); }}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>fullscreen</span>
                   </button>
                 </div>
-                <div className={styles.thumbsGrid}>
-                  <button className={styles.thumbBtn}>
-                    <img src={product.image} alt="Thumb 1" className={styles.thumbImg} />
+                <div className={styles.thumbsCarousel}>
+                  <button className={styles.thumbArrow} onClick={prevThumbs} aria-label="Anterior">
+                    <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>chevron_left</span>
                   </button>
-                  <button className={styles.thumbBtn}>
-                    <img src={product.image} alt="Thumb 2" className={styles.thumbImg} />
-                  </button>
-                  <button className={styles.thumbBtn}>
-                    <img src={product.image} alt="Thumb 3" className={styles.thumbImg} />
-                  </button>
-                  <button className={styles.thumbBtn}>
-                    <img src={product.image} alt="Thumb 4" className={styles.thumbImg} />
+                  <div className={styles.thumbsTrack}>
+                    <div
+                      ref={thumbsInnerRef}
+                      className={styles.thumbsInner}
+                      style={{ transform: `translateX(calc(-${thumbSlidePercent}% - ${thumbOffset * 0.5}rem))` }}
+                    >
+                      {loopedImages.map((img, i) => {
+                        const realIdx = ((i - VISIBLE_THUMBS) % realLength + realLength) % realLength;
+                        return (
+                          <button
+                            key={i}
+                            className={`${styles.thumbBtn} ${activeThumb === realIdx ? styles.thumbBtnActive : ''}`}
+                            onClick={() => setActiveThumb(realIdx)}
+                          >
+                            <img src={img.src} alt={`Thumb ${realIdx + 1}`} className={styles.thumbImg} />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <button className={styles.thumbArrow} onClick={nextThumbs} aria-label="Próximo">
+                    <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>chevron_right</span>
                   </button>
                 </div>
               </div>
@@ -364,74 +479,27 @@ const Product = () => {
           </div>
           
           <div className={styles.questionsList}>
-            <div className={styles.questionThread}>
-              <div className={styles.questionItem}>
-                <div className={styles.questionAvatar}>PG</div>
-                <div className={styles.questionContent}>
-                  <div className={styles.questionHeaderRow}>
-                    <span className={styles.questionName}>pedro_gamer</span>
-                    <span className={styles.questionTime}>há 2 horas</span>
-                  </div>
-                  <p className={styles.questionText}>
-                    Opa amigo, a conta tem ban no Hypixel ou está totalmente limpa? Consigo usar no Lunar Client?
-                  </p>
-                </div>
-              </div>
-              <div className={styles.answerItem}>
-                <div className={styles.answerAvatar}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>verified</span>
-                </div>
-                <div className={styles.questionContent}>
-                  <div className={styles.questionHeaderRow}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                      <span className={styles.answerName}>{product.seller.name}</span>
-                      <span className={styles.answerBadge}>Vendedor</span>
-                    </div>
-                    <span className={styles.answerTime}>há 1 hora</span>
-                  </div>
-                  <p className={styles.answerText}>
-                    Boa tarde Pedro! Totalmente limpa, nunca entrou no Hypixel nem em servidores de ranking. Funciona 100% liso no Lunar Client, Badlion e Vanilla!
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.questionThread}>
-              <div className={styles.questionItem}>
-                <div className={styles.questionAvatar}>LC</div>
-                <div className={styles.questionContent}>
-                  <div className={styles.questionHeaderRow}>
-                    <span className={styles.questionName}>lucas_craft</span>
-                    <span className={styles.questionTime}>há 5 horas</span>
-                  </div>
-                  <p className={styles.questionText}>
-                    Entrega automática mesmo se eu comprar agora de madrugada?
-                  </p>
-                </div>
-              </div>
-              <div className={styles.answerItem}>
-                <div className={styles.answerAvatar}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>verified</span>
-                </div>
-                <div className={styles.questionContent}>
-                  <div className={styles.questionHeaderRow}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                      <span className={styles.answerName}>{product.seller.name}</span>
-                      <span className={styles.answerBadge}>Vendedor</span>
-                    </div>
-                    <span className={styles.answerTime}>há 4 horas</span>
-                  </div>
-                  <p className={styles.answerText}>
-                    Sim! O bot da ggJala envia as credenciais no chat instantâneo no mesmo segundo em que o Pix for aprovado, independente do horário.
-                  </p>
-                </div>
-              </div>
-            </div>
+            {mockQuestions.map(q => (
+              <QuestionThread key={q.id} question={q} sellerName={product.seller.name} />
+            ))}
           </div>
         </div>
 
       </div>
     </main>
+
+    <Lightbox
+      open={lightboxOpen}
+      close={() => setLightboxOpen(false)}
+      index={lightboxIndex}
+      slides={galleryImages}
+      styles={{
+        container: { backgroundColor: 'rgba(1, 15, 31, 0.97)' },
+        slide: { padding: '16px' },
+      }}
+      carousel={{ finite: false }}
+    />
+    </>
   );
 };
 

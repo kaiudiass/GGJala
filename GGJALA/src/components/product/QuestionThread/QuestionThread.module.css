@@ -1,0 +1,106 @@
+.questionThread {
+  background-color: #1e1e21;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.questionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.questionAvatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: #2a2a2e;
+  color: var(--color-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.questionContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.questionHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.questionName {
+  font-family: var(--font-body-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+.questionTime {
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-label-sm);
+  font-size: 10px;
+}
+.questionText {
+  font-family: var(--font-body-md);
+  font-size: 14px;
+  color: var(--color-on-surface-variant);
+}
+
+.answerItem {
+  margin-left: 1.5rem;
+  background-color: #121215;
+  border-radius: 0.5rem;
+  padding: 0.875rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+@media (min-width: 768px) {
+  .answerItem { margin-left: 2.5rem; }
+}
+.answerAvatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #2a2a2e;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.answerName {
+  font-family: var(--font-body-md);
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+.answerBadge {
+  padding: 2px 4px;
+  border-radius: 0.25rem;
+  background-color: #2a2a2e;
+  color: var(--color-primary);
+  font-family: var(--font-label-sm);
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.answerTime {
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-label-sm);
+  font-size: 10px;
+  margin-left: auto;
+}
+.answerText {
+  font-family: var(--font-body-md);
+  font-size: 14px;
+  color: var(--color-on-surface);
+}

@@ -1,6 +1,6 @@
 .main {
   width: 100%;
-  background-color: var(--color-surface);
+  background-color: #121215;
   min-height: calc(100vh - 280px);
   padding-top: 0; /* Removido para que a section Hero suba até o topo absoluto e o header fique por cima */
 }
@@ -9,14 +9,14 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background-color: var(--color-surface);
+  background-color: #121215;
   padding-top: 10rem; /* 4rem do header + 6rem de respiro */
   padding-bottom: 4rem;
 }
 
 @media (min-width: 768px) {
   .hero {
-    background: linear-gradient(to bottom, var(--color-surface), var(--color-surface-container-lowest), var(--color-surface));
+    background: linear-gradient(to bottom, #121215, #0e0e10, #121215);
   }
 }
 
@@ -53,7 +53,7 @@
   height: 20rem;
   width: 20rem;
   border-radius: 50%;
-  background-color: rgba(44, 58, 76, 0.2); /* surface-bright/20 */
+  background-color: rgba(30, 30, 33, 0.2);
   filter: blur(100px);
 }
 
@@ -80,7 +80,7 @@
   gap: 0.5rem;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  background-color: rgba(28, 43, 60, 0.7); /* surface-container-high/70 */
+  background-color: rgba(30, 30, 33, 0.7);
   backdrop-filter: blur(12px);
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -145,7 +145,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background-color: rgba(13, 28, 45, 0.9);
+  background-color: rgba(30, 30, 33, 0.9);
   backdrop-filter: blur(24px);
   border-radius: 0.75rem;
   padding: 0.375rem;
@@ -189,7 +189,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.5rem;
-  background-color: rgba(18, 33, 49, 0.6);
+  background-color: #1e1e21;
   backdrop-filter: blur(16px);
   padding: 0.5rem;
   border-radius: 0.75rem;
@@ -216,7 +216,7 @@
   gap: 6px;
   padding: 0.375rem 0.5rem;
   border-radius: 0.5rem;
-  background-color: rgba(13, 28, 45, 0.8);
+  background-color: #2a2a2e;
 }
 
 @media (min-width: 640px) {
@@ -279,7 +279,7 @@
   width: 100%;
   padding-top: 3rem; /* py-12 */
   padding-bottom: 3rem;
-  background-color: var(--color-surface);
+  background-color: #121215;
 }
 
 .sectionContainer {
@@ -405,7 +405,7 @@
   gap: 6px;
   padding: 4px;
   border-radius: 0.75rem;
-  background-color: var(--color-surface-container-low);
+  background-color: #1e1e21;
   overflow-x: auto;
   flex-shrink: 0;
 }
@@ -413,7 +413,7 @@
 .filterPillActive {
   padding: 0.375rem 0.875rem;
   border-radius: 0.5rem;
-  background-color: var(--color-surface-container-high);
+  background-color: #2a2a2e;
   color: var(--color-primary);
   font-family: var(--font-label-md);
   font-size: 12px;
@@ -426,14 +426,14 @@
 .promoSection {
   width: 100%;
   padding: 2.5rem 0; /* py-10 */
-  background-color: var(--color-surface);
+  background-color: #121215;
 }
 
 .promoContainer {
   position: relative;
   overflow: hidden;
   border-radius: 1rem;
-  background: linear-gradient(to right, var(--color-surface-container-lowest), var(--color-surface-container), var(--color-surface-container-high));
+  background: linear-gradient(to right, #0e0e10, #1e1e21, #2a2a2e);
   padding: 1.25rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
@@ -498,7 +498,7 @@
   gap: 6px;
   padding: 0.25rem 0.75rem;
   border-radius: 0.25rem;
-  background-color: rgba(0, 230, 118, 0.2);
+  background-color: #2a2a2e;
   color: var(--color-primary);
   font-family: var(--font-label-sm);
   font-size: 10px;
@@ -594,7 +594,7 @@
 }
 
 .promoMetricCard {
-  background-color: rgba(1, 15, 31, 0.8); /* surface-container-lowest/80 */
+  background-color: #1e1e21;
   backdrop-filter: blur(8px);
   padding: 0.5rem;
   border-radius: 0.75rem;
@@ -645,7 +645,7 @@
   width: 100%;
   padding-top: 4rem; /* py-16 */
   padding-bottom: 4rem;
-  background-color: var(--color-surface-container-lowest);
+  background-color: #1e1e21;
 }
 
 .escrowHeader {
@@ -688,7 +688,7 @@
   flex-direction: column;
   padding: 1.5rem; /* p-6 */
   border-radius: 1rem; /* rounded-2xl */
-  background-color: var(--color-surface-container-low);
+  background-color: #2a2a2e;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* shadow-lg */
 }
 
@@ -734,7 +734,7 @@
   margin-top: 2.5rem; /* mt-10 */
   padding: 1.25rem; /* p-5 */
   border-radius: 0.75rem; /* rounded-xl */
-  background-color: var(--color-surface-container);
+  background-color: #2a2a2e;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -770,7 +770,7 @@
 .escrowGuaranteeBtn {
   padding: 0.625rem 1.25rem;
   border-radius: 0.5rem;
-  background-color: var(--color-surface-container-high);
+  background-color: #121215;
   color: var(--color-on-surface);
   font-family: var(--font-headline-sm);
   font-size: 13px;
